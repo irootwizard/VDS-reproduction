@@ -30,22 +30,22 @@ Python 依赖见 [`requirements.txt`](requirements.txt)。RSA 累加器的 Node.
 
 | 符号 | 代码变量 | 含义 |
 |---|---|---|
-| $\lambda$ | `SECURITY_PARAM = 128` | 安全参数 |
-| $n$ | `vk['n']` | RSA 模数（3072 bit） |
-| $h$ | `vk['h']` | RSA 累加器初始值 $\text{Acc}(\emptyset)$ |
-| $\text{Acc}_R$ | `server_state['Acc_R']` | 当前累加器值，对应撤销集合 $R$ |
-| $z^\ast$ | `server_state['z_star']` | $\prod_{t_j \in R} H_{\text{prime}}(t_j)$，缓存的素数积 |
-| $z_i$ | 局部变量 `z_i` | $H_{\text{prime}}(\mathit{tag}_i)$，单个 tag 的素数映射 |
-| $\alpha$ | `sk['alpha']` | BLS 私钥，$\alpha \in \mathbb{Z}_p$ |
-| $g$ | `vk['g']` | $\mathbb{G}_2$ 生成元 |
-| $A$ | `vk['A']` | BLS 公钥，$A = g^\alpha \in \mathbb{G}_2$ |
-| $u$ | `vk['u']` | 随机基点，$u \in \mathbb{G}_1$ |
-| $\sigma_i$ | `sigma_i` | 数据块 $s_i$ 的 BLS 签名 |
-| $\mathit{tag}_i$ | `tag_i` | 数据块的随机标签，$\mathit{tag}_i \in \{0,1\}^\lambda$ |
-| $H_G$ | `vk['HG']` | 哈希函数 $H_G: \{0,1\}^\ast \to \mathbb{G}_1$ |
-| $H_{\text{prime}}$ | `vk['HPrime']` | 哈希函数 $H_{\text{prime}}: \{0,1\}^\ast \to \text{Primes}(\lambda)$ |
-| $H_\lambda$ | `H_2` | 哈希函数 $H_\lambda: \{0,1\}^\ast \to [0, 2^\lambda)$ |
-| $H_{\text{Primes}}$ | `H_Primes` | 哈希函数 $H_{\text{Primes}}: \{0,1\}^\ast \to \text{Primes}(\lambda)$，用于 Fiat-Shamir |
+| $`\lambda`$ | `SECURITY_PARAM = 128` | 安全参数 |
+| $`n`$ | `vk['n']` | RSA 模数（3072 bit） |
+| $`h`$ | `vk['h']` | RSA 累加器初始值 $`\text{Acc}(\emptyset)`$ |
+| $`\text{Acc}_R`$ | `server_state['Acc_R']` | 当前累加器值，对应撤销集合 $`R`$ |
+| $`z^\ast`$ | `server_state['z_star']` | $`\prod_{t_j \in R} H_{\text{prime}}(t_j)`$，缓存的素数积 |
+| $`z_i`$ | 局部变量 `z_i` | $`H_{\text{prime}}(\mathit{tag}_i)`$，单个 tag 的素数映射 |
+| $`\alpha`$ | `sk['alpha']` | BLS 私钥，$`\alpha \in \mathbb{Z}_p`$ |
+| $`g`$ | `vk['g']` | $`\mathbb{G}_2`$ 生成元 |
+| $`A`$ | `vk['A']` | BLS 公钥，$`A = g^\alpha \in \mathbb{G}_2`$ |
+| $`u`$ | `vk['u']` | 随机基点，$`u \in \mathbb{G}_1`$ |
+| $`\sigma_i`$ | `sigma_i` | 数据块 $`s_i`$ 的 BLS 签名 |
+| $`\mathit{tag}_i`$ | `tag_i` | 数据块的随机标签，$`\mathit{tag}_i \in \{0,1\}^\lambda`$ |
+| $`H_G`$ | `vk['HG']` | 哈希函数 $`H_G: \{0,1\}^\ast \to \mathbb{G}_1`$ |
+| $`H_{\text{prime}}`$ | `vk['HPrime']` | 哈希函数 $`H_{\text{prime}}: \{0,1\}^\ast \to \text{Primes}(\lambda)`$ |
+| $`H_\lambda`$ | `H_2` | 哈希函数 $`H_\lambda: \{0,1\}^\ast \to [0, 2^\lambda)`$ |
+| $`H_{\text{Primes}}`$ | `H_Primes` | 哈希函数 $`H_{\text{Primes}}: \{0,1\}^\ast \to \text{Primes}(\lambda)`$，用于 Fiat-Shamir |
 
 ---
 
@@ -68,11 +68,11 @@ A = g ** alpha
 
 ### Append
 
-**Client** 对第 $i$ 条数据 $s_i$ 生成 BLS 签名：
+**Client** 对第 $`i`$ 条数据 $`s_i`$ 生成 BLS 签名：
 
 $$\sigma_i = \bigl(H_G(i \| \mathit{tag}_i) \cdot u^{s_i}\bigr)^\alpha \in \mathbb{G}_1$$
 
-**Server** 验证后存储 $(s_i, \sigma_i, \mathit{tag}_i)$，验证条件：
+**Server** 验证后存储 $`(s_i, \sigma_i, \mathit{tag}_i)`$，验证条件：
 
 $$e(\sigma_i,\ g) = e\!\left(H_G(i \| \mathit{tag}_i) \cdot u^{s_i},\ A\right)$$
 
@@ -86,11 +86,11 @@ sigma_i = (HG(str(i) + str(tag_i)) * u ** s) ** alpha
 
 ### Query（单查询非成员证明）
 
-**目标**：证明 $\mathit{tag}_i \notin R$，即数据块 $s_i$ 未被撤销。
+**目标**：证明 $`\mathit{tag}_i \notin R`$，即数据块 $`s_i`$ 未被撤销。
 
-令 $z_i = H_{\text{prime}}(\mathit{tag}_i)$，$z^\ast = \prod_{t_j \in R} H_{\text{prime}}(t_j)$。
+令 $`z_i = H_{\text{prime}}(\mathit{tag}_i)`$，$`z^\ast = \prod_{t_j \in R} H_{\text{prime}}(t_j)`$。
 
-由于 $\gcd(z_i, z^\ast) = 1$，用扩展欧几里得算法求 Bezout 系数：
+由于 $`\gcd(z_i, z^\ast) = 1`$，用扩展欧几里得算法求 Bezout 系数：
 
 $$x \cdot z^\ast + y \cdot z_i = 1 \quad (x, y \in \mathbb{Z})$$
 
@@ -98,13 +98,13 @@ $$x \cdot z^\ast + y \cdot z_i = 1 \quad (x, y \in \mathbb{Z})$$
 
 $$Y = h^y \bmod n \quad (\text{若 } y < 0 \text{ 则取 } h^{-1} \text{ 的正幂})$$
 
-证明 $\pi = (x, Y)$。
+证明 $`\pi = (x, Y)`$。
 
 **Verify** 验证条件：
 
 $$\text{Acc}_R^x \cdot Y^{z_i} \equiv h \pmod{n}$$
 
-**正确性**：$\text{Acc}_R = h^{z^\ast} \bmod n$，代入得 $h^{x \cdot z^\ast} \cdot h^{y \cdot z_i} = h^{x z^\ast + y z_i} = h^1 = h$。
+**正确性**：$`\text{Acc}_R = h^{z^\ast} \bmod n`$，代入得 $`h^{x \cdot z^\ast} \cdot h^{y \cdot z_i} = h^{x z^\ast + y z_i} = h^1 = h`$。
 
 ```python
 # vads_lib.py:627
@@ -117,7 +117,7 @@ Y = pow(h, y, n)           # 负数情形取 mul_inv(h, n) 的正幂
 
 ### Update
 
-更新第 $i$ 条数据为 $s_i'$：生成新标签 $\mathit{tag}_i'$ 和新签名 $\sigma_i'$，将旧 $\mathit{tag}_i$ 加入撤销集合：
+更新第 $`i`$ 条数据为 $`s_i'`$：生成新标签 $`\mathit{tag}_i'`$ 和新签名 $`\sigma_i'`$，将旧 $`\mathit{tag}_i`$ 加入撤销集合：
 
 $$R \leftarrow R \cup \{\mathit{tag}_i\}, \quad z^\ast \leftarrow z^\ast \cdot H_{\text{prime}}(\mathit{tag}_i)$$
 
@@ -136,7 +136,7 @@ server_state['Acc_R'] = pow(h, z_star, n)
 
 **目标**：一次证明查询集合 $`Q = \{z_1, \ldots, z_k\}`$（$`z_j = H_{\mathrm{prime}}(\mathit{tag}_j)`$）中所有 tag 均不在 $`R`$ 中。
 
-令 $\omega' = \prod_{z_i \in Q} z_i$，由 $\gcd(z^\ast, \omega') = 1$ 求：
+令 $`\omega' = \prod_{z_i \in Q} z_i`$，由 $`\gcd(z^\ast, \omega') = 1`$ 求：
 
 $$x \cdot z^\ast + y \cdot \omega' = 1$$
 
@@ -144,11 +144,11 @@ $$x \cdot z^\ast + y \cdot \omega' = 1$$
 
 $$V = \text{Acc}_R^x \bmod n, \quad Y = h^y \bmod n$$
 
-**步骤 7–9**（NI-PoE 子证明 1，对 $Y$ 的指数 $\omega'$）：
+**步骤 7–9**（NI-PoE 子证明 1，对 $`Y`$ 的指数 $`\omega'`$）：
 
 $$l_1 = H_{\text{Primes}}(\omega',\ Y,\ h \cdot V^{-1}), \quad t_1 = \lfloor \omega' / l_1 \rfloor, \quad T_1 = Y^{t_1} \bmod n$$
 
-**步骤 10–16**（NI-PoE 子证明 2，对 $\text{Acc}_R$ 的指数 $x$）：
+**步骤 10–16**（NI-PoE 子证明 2，对 $`\text{Acc}_R`$ 的指数 $`x`$）：
 
 $$h' = H_G'(\text{Acc}_R \| V), \quad l_2 = H_{\text{Primes}}(\text{Acc}_R,\ V,\ X'), \quad \gamma = H_\lambda(\text{Acc}_R,\ V,\ X',\ l_2)$$
 
@@ -156,7 +156,7 @@ $$X' = (h')^x \bmod n, \quad t_2 = \lfloor x / l_2 \rfloor, \quad r = x \bmod l_
 
 $$T_2 = \bigl(\text{Acc}_R \cdot (h')^\gamma\bigr)^{t_2} \bmod n$$
 
-证明 $\pi = \{V, Y, T_1, T_2, X', r\}$。
+证明 $`\pi = \{V, Y, T_1, T_2, X', r\}`$。
 
 **WitVerify\_star** 验证两个条件：
 
@@ -181,11 +181,11 @@ T_2 = pow((Acc_R * pow(h_prime, gamma, n)) % n, x // l_2, n)
 
 ### Audit / Judge
 
-**Audit**：Server 对索引集合 $I$ 计算聚合签名与非成员证明：
+**Audit**：Server 对索引集合 $`I`$ 计算聚合签名与非成员证明：
 
 $$\nu = \sum_{i \in I} v_i \cdot s_i \in \mathbb{Z}_p, \quad \sigma_I = \prod_{i \in I} \sigma_i^{v_i} \in \mathbb{G}_1$$
 
-其中 $v_i \xleftarrow{R} \mathbb{Z}_p$ 由 Client 选取，$\pi_1 = \text{WitCreate}^\ast(\text{Acc}_R, R, Q_I)$。
+其中 $`v_i \xleftarrow{R} \mathbb{Z}_p`$ 由 Client 选取，$`\pi_1 = \text{WitCreate}^\ast(\text{Acc}_R, R, Q_I)`$。
 
 **Judge** 验证两个条件：
 
@@ -208,32 +208,32 @@ sigma_I *= sigma_i ** v_i
 
 | 假设 | 作用 |
 |---|---|
-| 强 RSA 假设（Strong RSA） | RSA 累加器不可伪造；攻击者无法构造满足验证等式的假证明，除非能对任意整数计算 $n$ 下的任意次方根 |
-| $q$-SDH 假设 | BLS 签名不可伪造；攻击者无法在不知道 $\alpha$ 的情况下伪造满足配对等式的 $\sigma_i$ |
-| 随机预言机模型（ROM） | $H_{\text{prime}}$（hash\_to\_prime）和 Fiat-Shamir 变换（NI-PoE 中的 $l_1, l_2$）的安全性归约依赖 |
-| Type-3 双线性配对（BN254） | 聚合签名验证依赖 co-CDH 假设（$\mathbb{G}_1 \times \mathbb{G}_2$ 的计算 DH 问题困难） |
+| 强 RSA 假设（Strong RSA） | RSA 累加器不可伪造；攻击者无法构造满足验证等式的假证明，除非能对任意整数计算 $`n`$ 下的任意次方根 |
+| $`q`$-SDH 假设 | BLS 签名不可伪造；攻击者无法在不知道 $`\alpha`$ 的情况下伪造满足配对等式的 $`\sigma_i`$ |
+| 随机预言机模型（ROM） | $`H_{\text{prime}}`$（hash\_to\_prime）和 Fiat-Shamir 变换（NI-PoE 中的 $`l_1, l_2`$）的安全性归约依赖 |
+| Type-3 双线性配对（BN254） | 聚合签名验证依赖 co-CDH 假设（$`\mathbb{G}_1 \times \mathbb{G}_2`$ 的计算 DH 问题困难） |
 
 ### 各操作的安全性论证
 
 **Query / Verify 的不可伪造性**
 
-假设攻击者伪造了针对 $\mathit{tag}_i \in R$ 的有效证明 $(x, Y)$，即找到满足
+假设攻击者伪造了针对 $`\mathit{tag}_i \in R`$ 的有效证明 $`(x, Y)`$，即找到满足
 
 $$\text{Acc}_R^x \cdot Y^{z_i} \equiv h \pmod{n}$$
 
-的 $(x, Y)$。由于 $\text{Acc}_R = h^{z^\ast}$，这等价于 $h^{x z^\ast + y z_i} = h$，即找到 $z^\ast$ 和 $z_i$ 满足此关系的整数解。因为 $z_i \mid z^\ast$（$\mathit{tag}_i \in R$），故 $\gcd(z_i, z^\ast) = z_i > 1$，Bezout 等式 $x z^\ast + y z_i = 1$ 无整数解，攻击者必须在 $\mathbb{Z}_n^\ast$ 中计算 $h$ 的 $z_i$ 次方根，由强 RSA 假设不可行。
+的 $`(x, Y)`$。由于 $`\text{Acc}_R = h^{z^\ast}`$，这等价于 $`h^{x z^\ast + y z_i} = h`$，即找到 $`z^\ast`$ 和 $`z_i`$ 满足此关系的整数解。因为 $`z_i \mid z^\ast`$（$`\mathit{tag}_i \in R`$），故 $`\gcd(z_i, z^\ast) = z_i > 1`$，Bezout 等式 $`x z^\ast + y z_i = 1`$ 无整数解，攻击者必须在 $`\mathbb{Z}_n^\ast`$ 中计算 $`h`$ 的 $`z_i`$ 次方根，由强 RSA 假设不可行。
 
 **WitCreate\_star / WitVerify\_star 的安全性（NI-PoE）**
 
-两层 NI-PoE 子证明（$T_1, T_2$）通过 Fiat-Shamir 变换将 BBF19 的交互式指数知识证明转为非交互式。在 ROM 下，$l_1, l_2$ 视为随机素数，攻击者无法预先选择使验证等式成立的 $(T_1, T_2)$，安全性归约至强 RSA 问题。
+两层 NI-PoE 子证明（$`T_1, T_2`$）通过 Fiat-Shamir 变换将 BBF19 的交互式指数知识证明转为非交互式。在 ROM 下，$`l_1, l_2`$ 视为随机素数，攻击者无法预先选择使验证等式成立的 $`(T_1, T_2)`$，安全性归约至强 RSA 问题。
 
 **Append / Audit 的不可伪造性**
 
-BLS 签名满足 $\sigma_i = (H_G(i \| \mathit{tag}_i) \cdot u^{s_i})^\alpha$，伪造合法签名在 $q$-SDH 假设下不可行。Audit 使用随机挑战 $v_i$ 的线性组合，Judge 的配对等式验证聚合签名，不可伪造性规约至 BLS 聚合签名安全性。
+BLS 签名满足 $`\sigma_i = (H_G(i \| \mathit{tag}_i) \cdot u^{s_i})^\alpha`$，伪造合法签名在 $`q`$-SDH 假设下不可行。Audit 使用随机挑战 $`v_i`$ 的线性组合，Judge 的配对等式验证聚合签名，不可伪造性规约至 BLS 聚合签名安全性。
 
 **数据条数不影响安全性**
 
-安全假设均为计算困难性假设，与数据条数 $|DB|$ 和撤销集合大小 $|R|$ 无关。tag 碰撞概率为 $\binom{|DB|}{2} / 2^\lambda$，在 $\lambda = 128$ 下即使 $|DB| = 2^{64}$ 碰撞概率仍约 $2^{-1}$，实际场景（$|DB| \leq 2^{20}$）可忽略不计。$|R|$ 增大仅影响验证性能（Bezout 系数位数线性增长），不削弱安全归约。
+安全假设均为计算困难性假设，与数据条数 $`|DB|`$ 和撤销集合大小 $`|R|`$ 无关。tag 碰撞概率为 $`\binom{|DB|}{2} / 2^\lambda`$，在 $`\lambda = 128`$ 下即使 $`|DB| = 2^{64}`$ 碰撞概率仍约 $`2^{-1}`$，实际场景（$`|DB| \leq 2^{20}`$）可忽略不计。$`|R|`$ 增大仅影响验证性能（Bezout 系数位数线性增长），不削弱安全归约。
 
 ## 复现工作与差异
 
@@ -386,24 +386,24 @@ R 集合大小直接影响：
 
 ### 1. z\* 的素数碰撞
 
-**问题**：每次 update 向 $z^\ast$ 追加一个 128 bit 素数，新素数会不会与 $z^\ast$ 中已有的相同？
+**问题**：每次 update 向 $`z^\ast`$ 追加一个 128 bit 素数，新素数会不会与 $`z^\ast`$ 中已有的相同？
 
-- $z^\ast$ 本身不会重复：`update_z_star` 只做乘法不取模，$z^\ast$ 严格单调递增，重复概率为 0。
-- 真正的风险是 $H_{\text{prime}}$ 输出碰撞。128 bit 素数空间 $\pi(2^{128}) \approx 2^{128}/(128\ln 2) \approx 2^{121.5}$，单次 update 碰撞概率 $\approx |R| / 2^{121.5}$，累计 $\approx |R|^2 / 2^{122.5}$。$|R| = 2^{32}$ 时累计约 $2^{-58.5}$，需约 $2^{61}$ 次更新才接近 1。
+- $`z^\ast`$ 本身不会重复：`update_z_star` 只做乘法不取模，$`z^\ast`$ 严格单调递增，重复概率为 0。
+- 真正的风险是 $`H_{\text{prime}}`$ 输出碰撞。128 bit 素数空间 $`\pi(2^{128}) \approx 2^{128}/(128\ln 2) \approx 2^{121.5}`$，单次 update 碰撞概率 $`\approx |R| / 2^{121.5}`$，累计 $`\approx |R|^2 / 2^{122.5}`$。$`|R| = 2^{32}`$ 时累计约 $`2^{-58.5}`$，需约 $`2^{61}`$ 次更新才接近 1。
 - 素数空间比 128 bit tag 空间小约 90 倍，瓶颈在素数映射而非 tag 长度，单纯加长 tag 无益。
 
-**后果**（若发生）：$z_i \mid z^\ast$，`EEA` 返回 $(0, 1)$，`verify` 计算 $h^{z_i} \not\equiv h$ → 合法数据被永久拒绝；`query_star` 中整批 $k$ 条一起失败；`judge` 会错误指控诚实服务器；客户端无法区分碰撞与作恶。
+**后果**（若发生）：$`z_i \mid z^\ast`$，`EEA` 返回 $`(0, 1)`$，`verify` 计算 $`h^{z_i} \not\equiv h`$ → 合法数据被永久拒绝；`query_star` 中整批 $`k`$ 条一起失败；`judge` 会错误指控诚实服务器；客户端无法区分碰撞与作恶。
 
-**但不破坏可靠性（soundness）**：设 $z^\ast = z_i \cdot m$，伪造需 $Y^{z_i} = h^{1 - x z_i m}$，即要求 $z_i \mid 1$，对 $z_i > 1$ 恒不成立，攻击者只能在 $\mathbb{Z}_n^\ast$ 中开 $z_i$ 次方根 → 归约到强 RSA。**碰撞是可用性失效，不是安全性失效。**
+**但不破坏可靠性（soundness）**：设 $`z^\ast = z_i \cdot m`$，伪造需 $`Y^{z_i} = h^{1 - x z_i m}`$，即要求 $`z_i \mid 1`$，对 $`z_i > 1`$ 恒不成立，攻击者只能在 $`\mathbb{Z}_n^\ast`$ 中开 $`z_i`$ 次方根 → 归约到强 RSA。**碰撞是可用性失效，不是安全性失效。**
 
-另一种"碰撞"是 $\text{Acc}_R$ 取值重复，要求 $z_1^\ast \equiv z_2^\ast \pmod{\text{ord}(h)}$；能找到它就等于破解强 RSA，已被安全假设覆盖，无需单独防御。
+另一种"碰撞"是 $`\text{Acc}_R`$ 取值重复，要求 $`z_1^\ast \equiv z_2^\ast \pmod{\text{ord}(h)}`$；能找到它就等于破解强 RSA，已被安全假设覆盖，无需单独防御。
 
 ### 2. `EEA` 丢弃了 gcd
 
-`vads_lib.py:109` 的 `EEA` 文档声明返回满足 $ax + by = \gcd(a,b)$ 的系数，但实际只返回 $(x, y)$ 而丢弃 gcd；`query`（:627）与 `WitCreate_star`（:167）都未校验 $\gcd = 1$。建议二选一加固：
+`vads_lib.py:109` 的 `EEA` 文档声明返回满足 $`ax + by = \gcd(a,b)`$ 的系数，但实际只返回 $`(x, y)`$ 而丢弃 gcd；`query`（:627）与 `WitCreate_star`（:167）都未校验 $`\gcd = 1`$。建议二选一加固：
 
-- **低成本**：`EEA` 额外返回 gcd，调用处在 $\gcd \neq 1$ 时抛出可区分的异常，避免把碰撞误判为服务器作恶。
-- **防患于未然**：`update` 生成新 tag 时校验 `z_star % z_new != 0`，否则重抽 tag（代价是每次 update 一次 $O(|z^\ast|)$ 取模）。
+- **低成本**：`EEA` 额外返回 gcd，调用处在 $`\gcd \neq 1`$ 时抛出可区分的异常，避免把碰撞误判为服务器作恶。
+- **防患于未然**：`update` 生成新 tag 时校验 `z_star % z_new != 0`，否则重抽 tag（代价是每次 update 一次 $`O(|z^\ast|)`$ 取模）。
 
 ### 3. 上游 `batch_delete` 的缺陷
 
@@ -411,8 +411,8 @@ R 集合大小直接影响：
 
 ### 4. R 只增不减的长期开销
 
-撤销集合 R 单调增长，Bezout 系数 $x$ 的位数约 $128 \times |R|$ bit，`pow(Acc_R, x, n)` 的耗时随 $|R|$ 线性增长——证明生成因缓存 $z^\ast$ 仍是 O(1)，**但验证端不是**。论文未讨论 R 的压缩或换代机制，工程上需要定期快照（重新 Setup 并迁移未撤销数据）或采用分片累加器。
+撤销集合 R 单调增长，Bezout 系数 $`x`$ 的位数约 $`128 \times |R|`$ bit，`pow(Acc_R, x, n)` 的耗时随 $`|R|`$ 线性增长——证明生成因缓存 $`z^\ast`$ 仍是 O(1)，**但验证端不是**。论文未讨论 R 的压缩或换代机制，工程上需要定期快照（重新 Setup 并迁移未撤销数据）或采用分片累加器。
 
 ### 5. `set_int_max_str_digits` 的实际作用
 
-`src/main.py:10`（10000）与 `vads_lib.py:16`（100000）设置了不同上限，且该参数只限制 int↔str 转换，不影响 `pow` 与乘法，因此它不是协议容量上限，只会在打印或 `json.dump` 序列化 $z^\ast$ 时抛错。真正的瓶颈是上面第 4 点的验证性能。
+`src/main.py:10`（10000）与 `vads_lib.py:16`（100000）设置了不同上限，且该参数只限制 int↔str 转换，不影响 `pow` 与乘法，因此它不是协议容量上限，只会在打印或 `json.dump` 序列化 $`z^\ast`$ 时抛错。真正的瓶颈是上面第 4 点的验证性能。
