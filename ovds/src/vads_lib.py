@@ -16,7 +16,9 @@ import os
 sys.set_int_max_str_digits(100000)
 
 # 添加 RSA-accumulator 路径以便导入
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'RSA-accumulator'))
+_RSA_ACC_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'RSA-accumulator'))
+if _RSA_ACC_PATH not in sys.path:
+    sys.path.insert(0, _RSA_ACC_PATH)
 
 from helpfunctions import hash_to_prime, bezoute_coefficients, mul_inv, calculate_product, concat
 from main import setup as accumulator_setup
