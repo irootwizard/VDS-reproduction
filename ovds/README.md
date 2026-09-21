@@ -134,7 +134,7 @@ server_state['Acc_R'] = pow(h, z_star, n)
 
 ### Query\* / WitCreate\_star（聚合非成员证明，Algorithm 2）
 
-**目标**：一次证明查询集合 $Q = \{z_1, \ldots, z_k\}$（$z_j = H_{\text{prime}}(\mathit{tag}_j)$）中所有 tag 均不在 $R$ 中。
+**目标**：一次证明查询集合 $`Q = \{z_1, \ldots, z_k\}`$（$`z_j = H_{\mathrm{prime}}(\mathit{tag}_j)`$）中所有 tag 均不在 $`R`$ 中。
 
 令 $\omega' = \prod_{z_i \in Q} z_i$，由 $\gcd(z^\ast, \omega') = 1$ 求：
 
