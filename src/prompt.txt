@@ -1,0 +1,23 @@
+vads完整方案：
+setup 初始化双线性配对群 
+append 
+query(concurrent or single)
+verify
+audit
+judge
+update
+
+
+组件：
+1.BLS使用 charm库中双线性配对群使用BN254 elliptic curve
+2.RSA accumulator 3072 bits RSA module 128 bits security
+
+
+测试次数：50 independent trials
+
+Figure3 单次添加和更新，查询和验证的平均运行时间（0-200 50一根线 ms） 随最大数据量的变化（0--2^40 2^10一根线）
+Figure4 a.单次查询证明的大小  随最大数据量的变化（同3） b.并发查询证明大小（0-2kb估计） 随并发查询量的变化（0-50 10一根线）  c.并发查询运行时间 随并发查询量的变化
+Figure5 审计和评判的平均运行时间（0-1000ms） 随审计挑战集大小的变化（0-1000个item）
+对比方案：
+
+3072bit rsa n 对应2^128次操作安全

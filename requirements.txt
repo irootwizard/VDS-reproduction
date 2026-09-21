@@ -1,0 +1,13 @@
+# VADS (Verifiable Data Streaming) 项目依赖
+
+# 密码学库 - 用于双线性配对群和 BLS 签名
+charm-crypto>=0.50.0
+
+# 数据可视化
+matplotlib>=3.5.0
+numpy>=1.21.0
+
+# Merkle 树工具（用于 RSA-accumulator 测试）
+merkletools>=1.0.3
+
+
